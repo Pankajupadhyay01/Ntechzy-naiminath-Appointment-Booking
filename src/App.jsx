@@ -1,6 +1,7 @@
-// src/App.jsx
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from 'react'
+import BookingPage from './pages/BookingPage';
+import AdminDashboard from './pages/AdminDashboard';
+import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 
 import BookingWrapper from "./components/BookingWrapper";
 import BookingDetailsPage from "./pages/BookingDetailsPage";
@@ -24,8 +25,10 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />
       </Routes>
-    </BrowserRouter>
-  );
+      
+    </Router>
+    </>
+  )
 }
 
 export default App;
