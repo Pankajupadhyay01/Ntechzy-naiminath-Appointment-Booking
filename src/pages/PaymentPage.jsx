@@ -1,6 +1,7 @@
 // src/pages/PaymentPage.jsx
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import BackButton from "../components/BackButton"; // ✅ Import Back Button
 
 export default function PaymentPage() {
   const { state } = useLocation();
@@ -10,7 +11,6 @@ export default function PaymentPage() {
 
   const handleSuccess = () => {
     setIsProcessing(true);
-    // Simulate payment processing
     setTimeout(() => {
       navigate("/confirmation", { state });
     }, 2000);
@@ -22,6 +22,12 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+
+      {/* ✅ Back Button */}
+      <div className="mb-6 max-w-2xl mx-auto">
+        <BackButton />
+      </div>
+
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -53,7 +59,8 @@ export default function PaymentPage() {
           <div className="p-6 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Method</h2>
             <div className="space-y-3">
-              {/* Card Payment */}
+              
+              {/* Card */}
               <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                 <input
                   type="radio"
@@ -73,7 +80,7 @@ export default function PaymentPage() {
                 </div>
               </label>
 
-              {/* UPI Payment */}
+              {/* UPI */}
               <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                 <input
                   type="radio"
@@ -112,51 +119,9 @@ export default function PaymentPage() {
                   <span className="font-medium text-gray-900">Net Banking</span>
                 </div>
               </label>
+
             </div>
           </div>
-
-          {/* Payment Details */}
-          {paymentMethod === "card" && (
-            <div className="p-6 border-b border-gray-200">
-              <h3 className="text-md font-semibold text-gray-900 mb-4">Card Details</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
-                  <input
-                    type="text"
-                    placeholder="1234 5678 9012 3456"
-                    className="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Expiry Date</label>
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      className="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">CVV</label>
-                    <input
-                      type="text"
-                      placeholder="123"
-                      className="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Cardholder Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    className="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Security Notice */}
           <div className="p-6 bg-blue-50 border-b border-blue-200">
@@ -180,27 +145,13 @@ export default function PaymentPage() {
               >
                 Back
               </button>
+
               <button
                 onClick={handleSuccess}
                 disabled={isProcessing}
                 className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 flex items-center justify-center"
               >
-                {isProcessing ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Pay ₹590.00
-                  </>
-                )}
+                {isProcessing ? "Processing..." : `Pay ₹590.00`}
               </button>
             </div>
           </div>
@@ -209,18 +160,13 @@ export default function PaymentPage() {
         {/* Trust Badges */}
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500 mb-4">Secure payment with</p>
-          <div className="flex justify-center items-center space-x-6">
-            <div className="text-gray-400">
-              <span className="font-semibold">🔒 SSL</span>
-            </div>
-            <div className="text-gray-400">
-              <span className="font-semibold">PCI</span> DSS
-            </div>
-            <div className="text-gray-400">
-              <span className="font-semibold">RBI</span> Certified
-            </div>
+          <div className="flex justify-center items-center space-x-6 text-gray-400">
+            <span>🔒 SSL</span>
+            <span>PCI DSS</span>
+            <span>RBI Certified</span>
           </div>
         </div>
+
       </div>
     </div>
   );
